@@ -49,6 +49,9 @@ public:
 	
 	//! @brief Returns a string that contains the info related to Simple Vertex class
 	std::string toString() const;
+        
+        //! @brief Returns a string that contains the info related to Simple Vertex class (using tostring methods)
+        std::string toString_2() const;
 	
 	VertexType getContent() const { return content;};
 	
@@ -110,6 +113,7 @@ std::string SimpleVertex<VertexType, EdgeType>::toString() const
 {
   std::ostringstream os;
 	os << "Vertex number: "<< index << "\tNumber of neighbours:"<< nNeighbours()<<std::endl;
+        os << "Content: " << content<< std::endl;
 	
 	std::list<int>::const_iterator it;
 	os << "Neighbours:\t";
@@ -123,6 +127,27 @@ std::string SimpleVertex<VertexType, EdgeType>::toString() const
 	os << std::endl;
 	
 	return os.str();
+}
+
+template <typename VertexType, typename EdgeType>
+std::string SimpleVertex<VertexType, EdgeType>::toString_2() const
+{
+  std::ostringstream os;
+        os << "Vertex number: "<< index << "\tNumber of neighbours:"<< nNeighbours()<<std::endl;
+        os << "Content: " << content.toString() << std::endl;
+        
+        std::list<int>::const_iterator it;
+        os << "Neighbours:\t";
+        for ( it = adjacency_list.begin(); it != adjacency_list.end(); it++ ) {
+          os << *it << " ";
+          map_iterator ed_it = property_map.find(*it);
+          if ( ed_it != property_map.end()) {
+            os << "Content: " << ed_it->second.toString() << " ";
+          }
+        }
+        os << std::endl;
+        
+        return os.str();
 }
 
 template <typename VertexType, typename EdgeType>

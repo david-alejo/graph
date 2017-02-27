@@ -22,5 +22,4 @@ INSTALL(FILES  ${HEADERS}
 
 #Graph tests
 add_executable(test_graph src/SimpleGraph.h src/SimpleVertex.h src/test.cpp)
-target_link_libraries(test_graph functions)
 

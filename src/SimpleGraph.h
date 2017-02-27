@@ -71,12 +71,17 @@ template <typename VertexType, typename EdgeType> class SimpleGraph {
 	bool isEdge(int index1, int index2) const;
 	
 	//! @brief Translates the information contained in the class into a string
+        //! @note The type has to have implemented the operator << 
 	std::string toString() const;
+        
+        //! @brief Translates the information contained in the class into a string
+        //! @note The type has to have implemented the operator << 
+        std::string toString_2() const;
 	
 	//! @brief Clears all info stored in the class
 	void clear();
 	
-	inline VertexType getVertexContent(int vertex_id) const { 
+	virtual VertexType getVertexContent(int vertex_id) const { 
 	  
 	  return vertices.at(vertex_id).getContent();
 	};
@@ -96,7 +101,7 @@ template <typename VertexType, typename EdgeType> class SimpleGraph {
 	  return vertices[vertex_id].getNeighbours();
 	}
 	
-	private:
+	protected:
 	// The vertices list, each vertex has its adjacency list
 	std::vector<SimpleVertex<VertexType, EdgeType> > vertices;
 	bool symmetric;
@@ -106,7 +111,7 @@ template <typename VertexType, typename EdgeType> class SimpleGraph {
 	//! @param target Node to reach
 	//! @param visitado An array that contains the vertices that have been visited right now
 	//! @retval true There is a path between root and target
-	//! @retval false No connection between this two nodes
+	//! @retval false No connection between these two nodes
 	bool DFS(int root, int target, bool *visitado) const;
 };
 
@@ -155,6 +160,23 @@ std::string SimpleGraph<VertexType, EdgeType>::toString() const
 	
   return os.str();
 }
+
+template <typename VertexType, typename EdgeType>
+std::string SimpleGraph<VertexType, EdgeType>::toString_2() const
+{
+  std::ostringstream os;
+  
+  os << "Printing graph.\tN_vertices = " << nVertices() << "\tN_edges = " << nEdges() << std::endl;
+
+  for ( unsigned int i=0; i < vertices.size(); i++) {
+    os << vertices[i].toString_2();
+  }
+        
+  os << "End of the graph" << std::endl << std::endl;
+        
+  return os.str();
+}
+
 
 template <typename VertexType, typename EdgeType>
 bool SimpleGraph<VertexType, EdgeType>::addEdge(int index1, int index2)
